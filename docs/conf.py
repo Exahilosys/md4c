@@ -53,11 +53,9 @@ try:
 
 except KeyError:
 
-    pass
+    pyversion = '3.*'
 
-else:
-
-    rst_prolog += f'\n.. |pyversion| replace:: {pyversion}'
+rst_prolog += f'\n.. |pyversion| replace:: {pyversion}'
 
 
 # -- General configuration ---------------------------------------------------
@@ -80,9 +78,7 @@ autodoc_inherit_docstrings = False
 # intersphinx
 
 intersphinx_mapping = {
-  'py': ('https://docs.python.org/3', None),
-  'bs4': ('https://www.crummy.com/software/BeautifulSoup/bs4/doc', None),
-  'sty': ('https://sty.mewo.dev', None)
+  'py': ('https://docs.python.org/3', None)
 }
 
 # Add any paths that contain templates here, relative to this directory.

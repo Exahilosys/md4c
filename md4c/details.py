@@ -54,7 +54,7 @@ class _Meta(_Base.__class__):
 
             def draw(value):
 
-                buffer = ':class:`~'
+                buffer = ':class:`'
 
                 if issubclass(value, _Base):
 
@@ -64,10 +64,7 @@ class _Meta(_Base.__class__):
 
                     value = self._types[value]
 
-                    buffer += f'{value.__module__}.'
-
                 return f'{buffer}{value.__name__}`\\'
-
 
             for (name, c_type, descr) in zip(names, c_types, descriptions):
 

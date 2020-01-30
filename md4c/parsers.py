@@ -111,7 +111,9 @@ class Html(Base):
 
     .. warning::
 
-        Only works with :mod:`bs4` installed.
+        Only works with
+        `bs4 <https://www.crummy.com/software/BeautifulSoup/bs4/doc>`_
+        installed.
     """
 
     flags = flags.Spec.tables
@@ -335,7 +337,7 @@ class Ascii(Base):
 
     .. warning::
 
-        Only works with :mod:`sty` installed.
+        Only works with `sty <https://sty.mewo.dev>`_ installed.
     """
 
     _empty = ''
