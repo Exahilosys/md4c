@@ -77,7 +77,7 @@ class Base(abc.ABC):
     def _get(self):
 
         """
-        Should return a single :class:`str` value for the final result.
+        Should return a single :class:`str` value as the final result.
         """
 
     def get(self, value):
@@ -107,7 +107,7 @@ class Html(Base):
     """
     Converts to html.
 
-    Flags are ``tables``.
+    Flags: ``tables``.
 
     .. warning::
 
@@ -333,7 +333,7 @@ class Ascii(Base):
     """
     Converts to ascii escape sequences.
 
-    Default flags: ``no_html``.
+    Flags: ``no_html``.
 
     .. warning::
 

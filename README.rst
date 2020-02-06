@@ -27,4 +27,4 @@ Usage
 Links
 -----
 
-- `Documentation <https://flagopt.readthedocs.io>`_
+- `Documentation <https://md4c.readthedocs.io>`_
