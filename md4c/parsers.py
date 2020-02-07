@@ -30,7 +30,7 @@ class Base(abc.ABC):
 
         for cls in self.__class__.__mro__:
 
-            if not issubclass(cls, Parser):
+            if not issubclass(cls, Base):
 
                 continue
 

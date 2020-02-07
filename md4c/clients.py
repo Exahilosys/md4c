@@ -42,7 +42,7 @@ def load(path = None):
 
         system = platform.system()
 
-        for name in os.path.listdir(directory):
+        for name in os.listdir(directory):
 
             (root, ext) = os.path.splitext(name)
 
