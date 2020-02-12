@@ -43,7 +43,7 @@ def block(func):
 
 
 _span_details = {
-    enums.Span.strong   : details.A       ,
+    enums.Span.a        : details.A       ,
     enums.Span.img      : details.Img     ,
     enums.Span.wiki_link: details.WikiLink
 }
@@ -58,8 +58,6 @@ def text(func):
 
     @helpers.enum_cb(enums.Text)
     def wrapper(type, data, size, udata):
-
-        data = data.decode()
 
         data = data[:size]
 

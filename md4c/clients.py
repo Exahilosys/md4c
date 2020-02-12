@@ -1,4 +1,4 @@
-import os
+import sys, os
 import platform
 
 from . import types
@@ -64,23 +64,32 @@ class Main:
     """
     Class for interacting with the parser.
 
+    The ``options`` param can be ``flags`` and callbacks.
+
     Valid callbacks are ``(enter/leave)_(block/span)`` and ``text``.
 
     Flags are used to (de)activate built-in derivates and extensions.
     """
 
-    __slots__ = ('_store',)
+    __slots__ = ('_store', '_encoding')
 
     _version = 0
 
-    def __init__(self, flags = 0, **callbacks):
+    def __init__(self, encoding = None, /, **options):
 
         load()
 
         self._store = binds.create(
-            **callbacks,
-            flags = flags,
-            api_version = self._version)
+            **options,
+            api_version = self._version
+        )
+
+        self._encoding = encoding or sys.getdefaultencoding()
+
+    @property
+    def encoding(self):
+
+        return self._encoding
 
     def parse(self, value):
 
@@ -90,6 +99,6 @@ class Main:
 
         size = len(value)
 
-        value = value.encode()
+        value = value.encode(self._encoding)
 
         return helpers.c_call(lib.md_parse, value, size, self._store, 0)

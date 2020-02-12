@@ -26,7 +26,7 @@ class Base(abc.ABC):
 
     flags = flags.Spec.strike_through | flags.Spec.underline
 
-    def __init__(self, flags = 0):
+    def __init__(self, *args, flags = 0):
 
         for cls in self.__class__.__mro__:
 
@@ -37,6 +37,7 @@ class Base(abc.ABC):
             flags |= cls.flags
 
         self._client = clients.Main(
+            *args,
             flags = flags,
             enter_block = self._enter,
             leave_block = self._leave,
@@ -45,9 +46,19 @@ class Base(abc.ABC):
             text = self._track
         )
 
+    @property
+    def client(self):
+
+        return self._client
+
+    @staticmethod
+    def _res(type):
+
+        return type.name.rstrip('_')
+
     def _enter(self, type, info):
 
-        name = type.name.rstrip('_')
+        name = self._res(type)
 
         name = f'_parse_{name}'
 
@@ -77,7 +88,7 @@ class Base(abc.ABC):
     def _get(self):
 
         """
-        Should return a single :class:`str` value as the final result.
+        Should return the final result.
         """
 
     def get(self, value):
@@ -120,13 +131,13 @@ class Html(Base):
 
     __slots__ = ('_tags', '_soup')
 
-    def __init__(self, **opts):
+    def __init__(self, *args, **opts):
 
         if not bs4:
 
             raise ImportError('mising "bs4" module')
 
-        super().__init__(**opts)
+        super().__init__(*args, **opts)
 
         soup = bs4.BeautifulSoup(features = 'html.parser')
 
@@ -146,6 +157,8 @@ class Html(Base):
 
     def _track(self, type, data):
 
+        data = data.decode(self._client.encoding)
+
         self._add(data)
 
     def _fin(self):
@@ -162,9 +175,7 @@ class Html(Base):
 
         value = self._soup.new_tag(name, **info)
 
-        empty = value.is_empty_element
-
-        (self._add if empty else self._tags.append)(value)
+        self._tags.append(value)
 
         return value
 
@@ -190,7 +201,9 @@ class Html(Base):
 
         name = 'ol'
 
-        self._new(name, start = info.start)
+        attrs = {'start': info.start}
+
+        self._new(name, info = attrs)
 
     def _parse_li(self, info):
 
@@ -220,7 +233,9 @@ class Html(Base):
 
         if info.lang:
 
-            attrs['class'] = f'lang-{info.lang}'
+            text = info.lang.text.decode(self._client.encoding)
+
+            attrs['class'] = f'language-{text}'
 
         name = 'code'
 
@@ -292,7 +307,13 @@ class Html(Base):
 
     def _parse_a(self, info):
 
-        attrs = {'href': info.href}
+        attrs = {}
+
+        if info:
+
+            text = info.href.text.decode(self._client.encoding)
+
+            attrs['href'] = text
 
         name = 'a'
 
@@ -300,7 +321,9 @@ class Html(Base):
 
     def _parse_img(self, info):
 
-        attrs = {'src': info.src}
+        text = info.src.text.decode(self._client.encoding)
+
+        attrs = {'src': text}
 
         name = 'img'
 
@@ -344,13 +367,15 @@ class Ascii(Base):
 
     flags = flags.Spec.no_html
 
-    def __init__(self, **opts):
+    __slots__ = ('_buffer', '_closes', '_listing')
+
+    def __init__(self, *args, **opts):
 
         if not sty:
 
             raise ImportError('missing "sty" module')
 
-        super().__init__(**opts)
+        super().__init__(*args, **opts)
 
         self._buffer = []
 
@@ -371,6 +396,8 @@ class Ascii(Base):
         self._buffer.append(data)
 
     def _track(self, type, data):
+
+        data = data.decode(self._client.encoding)
 
         self._add(data)
 
@@ -514,7 +541,9 @@ class Ascii(Base):
 
     def _parse_img(self, info):
 
-        open = f'\n{info.src}\n'
+        text = info.src.text.decode(self._client.encoding)
+
+        open = f'\n{text}\n'
 
         self._new(open)
 

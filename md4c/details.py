@@ -1,4 +1,5 @@
 import ctypes
+import functools
 
 from . import types
 from . import enums
@@ -118,7 +119,7 @@ class Attribute(Detail):
     """
 
     _fields_ = (
-        ('text'          , types.char  ),
+        ('text'          , types.char_p),
         ('size'          , types.size  ),
         ('substr_types'  , types.enum  ),
         ('substr_offsets', types.offset)
