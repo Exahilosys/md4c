@@ -6,7 +6,7 @@ with open('README.rst') as file:
 
 name = 'md4c'
 
-version = '0.1.2'
+version = '0.1.3'
 
 author = 'Exahilosys'
 

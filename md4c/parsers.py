@@ -176,7 +176,7 @@ class Html(Base):
 
     def _parse_quote(self, info):
 
-        name = 'backquote'
+        name = 'blockquote'
 
         self._new(name)
 
