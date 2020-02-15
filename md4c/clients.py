@@ -75,7 +75,7 @@ class Main:
 
     _version = 0
 
-    def __init__(self, encoding = None, /, **options):
+    def __init__(self, encoding = None, **options):
 
         load()
 
