@@ -26,7 +26,7 @@ setuptools.setup(
         'html': [
             'bs4'
         ],
-        'ascii': [
+        'ansi': [
             'sty'
         ]
     }

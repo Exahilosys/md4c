@@ -6,7 +6,7 @@ from . import clients
 from . import details
 
 
-__all__ = ('Base', 'Html', 'Ascii')
+__all__ = ('Base', 'Html', 'Ansi')
 
 
 class Base(abc.ABC):
@@ -336,10 +336,10 @@ except ImportError:
     sty = None
 
 
-class Ascii(Base):
+class Ansi(Base):
 
     """
-    Converts to ascii escape sequences.
+    Converts to ansi escape sequences.
 
     Flags: ``no_html``.
 
