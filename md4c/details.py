@@ -42,45 +42,25 @@ class _Meta(_Base.__class__):
     def __doc__(self):
 
         try:
-
             subdoc = self.__dict__['__doc__']
-
             (value, descriptions) = subdoc.rsplit('\n\n', 1)
-
             descriptions = descriptions.split('\n')
-
             (names, c_types) = zip(*self._fields_)
-
             rows = []
-
             def draw(value):
-
                 buffer = ':class:`'
-
                 if issubclass(value, _Base):
-
                     buffer += '.'
-
                 else:
-
                     value = self._types[value]
-
                 return f'{buffer}{value.__name__}`\\'
-
             for (name, c_type, descr) in zip(names, c_types, descriptions):
-
                 type = draw(c_type)
-
                 descr = descr.strip()
-
                 row = f'    "{name}", {type}, "{descr}"'
-
                 rows.append(row)
-
             if rows:
-
                 rows = '\n'.join(rows)
-
                 outline = (
 f"""
 .. csv-table::
@@ -90,11 +70,8 @@ f"""
 {rows}
 """
 )
-
                 value = f'{value}\n\n{outline}'
-
         except Exception as error:
-
             print(repr(error))
 
         return value

@@ -13,15 +13,10 @@ def _clause(enum, details, func):
 
     @helpers.enum_cb(enum)
     def wrapper(type, detail_a, udata):
-
         type = enum(type)
-
         cls = details.get(type)
-
         detail = cls.from_address(detail_a) if cls and detail_a else None
-
         func(type, detail)
-
         return 0
 
     return wrapper
@@ -58,11 +53,8 @@ def text(func):
 
     @helpers.enum_cb(enums.Text)
     def wrapper(type, data, size, udata):
-
         data = data[:size]
-
         func(type, data)
-
         return 0
 
     return wrapper
@@ -71,9 +63,7 @@ def text(func):
 def debug_log(func):
 
     def wrapper(message, udata):
-
         func(message)
-
         return 0
 
     return wrapper
@@ -82,9 +72,7 @@ def debug_log(func):
 def syntax(func):
 
     def wrapper(*args, **kwargs):
-
         func()
-
         return 0
 
     return wrapper

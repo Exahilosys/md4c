@@ -50,13 +50,9 @@ def load(path):
     lib = ctypes.CDLL(path)
 
     for (name, argtypes, restype, errcheck) in _functions:
-
         func = getattr(lib, name)
-
         func.argtypes = argtypes
-
         func.restype = restype
-
         func.errcheck = errcheck
 
     return lib
@@ -91,15 +87,10 @@ def create(**options):
     (wraps, fails) = zip(*_assets)
 
     for (name, fail, func, wrap) in zip(names, fails, funcs, wraps):
-
         value = options.get(name) or fail
-
         if wrap:
-
             value = wrap(value)
-
         value = func(value)
-
         args.append(value)
 
     return Storage(*args)

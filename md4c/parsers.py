@@ -29,11 +29,8 @@ class Base(abc.ABC):
     def __init__(self, *args, flags = 0):
 
         for cls in self.__class__.__mro__:
-
             if not issubclass(cls, Base):
-
                 continue
-
             flags |= cls.flags
 
         self._client = clients.Main(
@@ -65,7 +62,6 @@ class Base(abc.ABC):
         func = getattr(self, name, None)
 
         if not func:
-
             return
 
         func(info)
@@ -105,11 +101,8 @@ class Base(abc.ABC):
 
 
 try:
-
     import bs4
-
 except ImportError:
-
     bs4 = None
 
 
@@ -134,7 +127,6 @@ class Html(Base):
     def __init__(self, *args, **opts):
 
         if not bs4:
-
             raise ImportError('mising "bs4" module')
 
         super().__init__(*args, **opts)
@@ -232,9 +224,7 @@ class Html(Base):
         attrs = {}
 
         if info.lang:
-
             text = info.lang.text.decode(self._client.encoding)
-
             attrs['class'] = f'language-{text}'
 
         name = 'code'
@@ -310,9 +300,7 @@ class Html(Base):
         attrs = {}
 
         if info:
-
             text = info.href.text.decode(self._client.encoding)
-
             attrs['href'] = text
 
         name = 'a'
@@ -343,11 +331,8 @@ class Html(Base):
 
 
 try:
-
     import sty
-
 except ImportError:
-
     sty = None
 
 
@@ -416,7 +401,6 @@ class Ascii(Base):
         self._buffer.append(open)
 
         if close is None:
-
             return
 
         self._closes.append(close)

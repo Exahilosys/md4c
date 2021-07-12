@@ -31,29 +31,18 @@ def load(path = None):
     global lib
 
     if lib:
-
         return
 
     if not path:
-
         directory = os.path.dirname(__file__)
-
         directory = os.path.join(directory, 'bin')
-
         system = platform.system()
-
         for name in os.listdir(directory):
-
             (root, ext) = os.path.splitext(name)
-
             if root == system:
-
                 break
-
         else:
-
             raise FileNotFoundError(f'Missing lib for "{system}" system')
-
         path = os.path.join(directory, name)
 
     lib = binds.load(path)
